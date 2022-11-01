@@ -1,9 +1,7 @@
 from sqlalchemy import Column, DATETIME, Integer, VARCHAR, CHAR, PrimaryKeyConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship
-from messenger_schemas.schema.group_chat_member_schema import GroupChatMemberSchema
-
-from messenger_schemas.schema.group_chat_schema import GroupChatSchema
-
+from .group_chat_member_schema import GroupChatMemberSchema
+from .group_chat_schema import GroupChatSchema
 from .message_schema import MessageSchema
 from .friendship_schema import FriendshipSchema
 

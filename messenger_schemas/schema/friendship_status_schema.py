@@ -1,5 +1,6 @@
 from sqlalchemy import CHAR, DATETIME, Column, ForeignKeyConstraint, Integer, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
+from .friendship_status_code_schema import FriendshipStatusCodeSchema
 
 from ..schema import Base
 
@@ -30,4 +31,4 @@ class FriendshipStatusSchema(Base):
                         onupdate="CASCADE", ondelete="CASCADE" ,
                         name="friendship_status_specifier_id_FK")
     
-    # status_code = relationship("FriendshipStatusCodeSchema")
+    status_code = relationship(FriendshipStatusCodeSchema.__name__)
