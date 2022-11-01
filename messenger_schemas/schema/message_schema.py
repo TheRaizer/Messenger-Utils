@@ -27,7 +27,7 @@ class MessageSchema(Base):
                         name="message_group_chat_id_FK")
     
     message_sender = relationship("UserSchema", foreign_keys=[sender_id], back_populates="messages_sent")
-    # message_reciever = relationship("UserSchema", foreign_keys=[reciever_id], back_populates="messages_recieved")
-    # group_chat = relationship("GroupChatSchema", back_populates="group_chat_messages")
+    message_reciever = relationship("UserSchema", foreign_keys=[reciever_id], back_populates="messages_recieved")
+    group_chat = relationship("GroupChatSchema", back_populates="group_chat_messages")
     
     PrimaryKeyConstraint(message_id)

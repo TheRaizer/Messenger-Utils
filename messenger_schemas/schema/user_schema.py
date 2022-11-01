@@ -1,5 +1,8 @@
 from sqlalchemy import Column, DATETIME, Integer, VARCHAR, CHAR, PrimaryKeyConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship
+from messenger_schemas.schema.group_chat_member_schema import GroupChatMemberSchema
+
+from messenger_schemas.schema.group_chat_schema import GroupChatSchema
 
 from .message_schema import MessageSchema
 from .friendship_schema import FriendshipSchema
@@ -36,16 +39,16 @@ class UserSchema(Base):
         back_populates="message_sender",
         passive_deletes=True)
     
-    # messages_recieved = relationship(
-    #     "MessageSchema", 
-    #     # back_populates="message_reciever", 
-    #     passive_deletes=True)
+    messages_recieved = relationship(
+        MessageSchema.__name__,
+        back_populates="message_reciever",
+        passive_deletes=True)
     
-    # group_chats =  relationship(
-    #     "GroupChatSchema", 
-    #     secondary="GroupChatMemberSchema", 
-    #     # back_populates="members", 
-    #     passive_deletes=True)
+    group_chats =  relationship(
+        GroupChatSchema.__name__,
+        secondary=GroupChatMemberSchema.__name__, 
+        back_populates="members",
+        passive_deletes=True)
 
     PrimaryKeyConstraint(user_id)
     
