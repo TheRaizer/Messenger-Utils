@@ -1,8 +1,7 @@
 from sqlalchemy import Column, Integer, VARCHAR, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
 
-from messenger_schemas.schema.group_chat_member_schema import GroupChatMemberSchema
-
+from .group_chat_member_schema import GroupChatMemberSchema
 from .message_schema import MessageSchema
 
 from ..schema import Base
