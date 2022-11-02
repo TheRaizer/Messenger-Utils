@@ -23,4 +23,4 @@ class FriendshipSchema(Base):
     
     requester = relationship("UserSchema", foreign_keys=[requester_id], back_populates="friend_requests_sent")
     addressee = relationship("UserSchema", foreign_keys=[addressee_id], back_populates="friend_requests_recieved")
-    status = relationship(FriendshipStatusSchema.__name__)
+    statuses = relationship(FriendshipStatusSchema.__name__, foreign_keys=[FriendshipStatusSchema.addressee_id, FriendshipStatusSchema.requester_id])

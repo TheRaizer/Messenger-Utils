@@ -15,13 +15,9 @@ class FriendshipStatusSchema(Base):
     
     PrimaryKeyConstraint(requester_id, addressee_id, specified_date_time)
     
-    ForeignKeyConstraint([requester_id], ["friendship.requester_id"], 
+    ForeignKeyConstraint([requester_id, addressee_id], ["friendship.requester_id", "friendship.addressee_id"], 
                         onupdate="CASCADE", ondelete="CASCADE",
-                        name="friendship_status_requester_id_FK")
-    
-    ForeignKeyConstraint([addressee_id], ["friendship.addressee_id"], 
-                        onupdate="CASCADE", ondelete="CASCADE", 
-                        name="friendship_status_addressee_id_FK")
+                        name="friendship_status_friend_id_FK")
     
     ForeignKeyConstraint([status_code_id], ["friendship_status_code.status_code_id"], 
                         onupdate="CASCADE", ondelete="SET DEFAULT", 
