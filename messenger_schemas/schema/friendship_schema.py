@@ -1,5 +1,6 @@
 from sqlalchemy import Column, DATETIME, ForeignKeyConstraint, Integer, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
+from .friendship_status_schema import FriendshipStatusSchema
 
 from ..schema import Base
 
@@ -22,3 +23,4 @@ class FriendshipSchema(Base):
     
     requester = relationship("UserSchema", foreign_keys=[requester_id], back_populates="friend_requests_sent")
     addressee = relationship("UserSchema", foreign_keys=[addressee_id], back_populates="friend_requests_recieved")
+    status = relationship(FriendshipStatusSchema.__name__)
