@@ -39,6 +39,7 @@ class UserSchema(Base):
     
     messages_recieved = relationship(
         MessageSchema.__name__,
+        foreign_keys=[MessageSchema.reciever_id],
         back_populates="message_reciever",
         passive_deletes=True)
     
