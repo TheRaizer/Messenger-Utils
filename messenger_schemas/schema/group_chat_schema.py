@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, VARCHAR, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
 
-from .group_chat_member_schema import GroupChatMemberSchema
 from .message_schema import MessageSchema
 
 from ..schema import Base
@@ -12,6 +11,6 @@ class GroupChatSchema(Base):
     name = Column(VARCHAR(20), nullable=False)
     
     group_chat_messages = relationship(MessageSchema.__name__, back_populates="group_chat", passive_deletes=True)
-    members = relationship("UserSchema", secondary=GroupChatMemberSchema.__name__, back_populates="group_chats")
+    members = relationship("UserSchema", secondary="GroupChatMemberSchema", back_populates="group_chats")
     
     PrimaryKeyConstraint(group_chat_id)
