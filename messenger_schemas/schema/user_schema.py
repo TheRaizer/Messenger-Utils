@@ -44,7 +44,7 @@ class UserSchema(Base):
     
     group_chats =  relationship(
         GroupChatSchema.__name__,
-        secondary=GroupChatMemberSchema.__name__, 
+        secondary=GroupChatMemberSchema, 
         back_populates="members",
         passive_deletes=True)
 
