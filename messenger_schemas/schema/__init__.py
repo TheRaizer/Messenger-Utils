@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 
-from messenger_schemas.environment_variables import RDS_URL
+from ..environment_variables import RDS_URL
 
 Base: DeclarativeMeta = declarative_base()
 
