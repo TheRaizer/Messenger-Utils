@@ -14,7 +14,7 @@ class UserSchema(Base):
     first_name = Column(VARCHAR(30), nullable=True)
     last_name = Column(VARCHAR(30), nullable=True)
     birthdate = Column(DATETIME, nullable=True)
-    password_hash = Column(CHAR(60), nullable=False)
+    password_hash = Column(VARCHAR(100), nullable=False)
     email = Column(VARCHAR(255), nullable=False)
     
     # passive_deletes is assigned on the one side of a one-to-many relationship. It ensures that the database handles ON DELETE operations.
