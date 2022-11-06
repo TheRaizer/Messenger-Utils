@@ -1,3 +1,4 @@
+from typing import List
 from sqlalchemy import Column, DATETIME, Integer, VARCHAR, CHAR, PrimaryKeyConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship
 from .group_chat_member_schema import GroupChatMemberSchema
@@ -20,30 +21,30 @@ class UserSchema(Base):
     # passive_deletes is assigned on the one side of a one-to-many relationship. It ensures that the database handles ON DELETE operations.
     # passive_updates is default to True.
     # on only the one side of a one to many relationship, specify table schema name using the class import __name__.
-    friend_requests_sent = relationship(
+    friend_requests_sent: List[FriendshipSchema] = relationship(
         FriendshipSchema.__name__,
         foreign_keys=[FriendshipSchema.requester_id],
         back_populates="requester",
         passive_deletes=True)
-    friend_requests_recieved = relationship(
+    friend_requests_recieved: List[FriendshipSchema] = relationship(
         FriendshipSchema.__name__,
         foreign_keys=[FriendshipSchema.addressee_id],
         back_populates="addressee",
         passive_deletes=True)
     
-    messages_sent = relationship(
+    messages_sent: List[MessageSchema] = relationship(
         MessageSchema.__name__,
         foreign_keys=[MessageSchema.sender_id],
         back_populates="message_sender",
         passive_deletes=True)
     
-    messages_recieved = relationship(
+    messages_recieved: List[MessageSchema] = relationship(
         MessageSchema.__name__,
         foreign_keys=[MessageSchema.reciever_id],
         back_populates="message_reciever",
         passive_deletes=True)
     
-    group_chats =  relationship(
+    group_chats: List[GroupChatSchema] =  relationship(
         GroupChatSchema.__name__,
         secondary=GroupChatMemberSchema, 
         back_populates="members",

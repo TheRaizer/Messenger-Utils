@@ -1,7 +1,12 @@
 from sqlalchemy import BOOLEAN, Column, DATETIME, ForeignKeyConstraint, Integer, VARCHAR, PrimaryKeyConstraint
-
 from ..schema import Base
 from sqlalchemy.orm import relationship
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .user_schema import UserSchema
+    from .group_chat_schema import GroupChatSchema
 
 class MessageSchema(Base):
     __tablename__ = "message"
@@ -26,8 +31,8 @@ class MessageSchema(Base):
                         onupdate="CASCADE", ondelete="SET NULL", 
                         name="message_group_chat_id_FK")
     
-    message_sender = relationship("UserSchema", foreign_keys=[sender_id], back_populates="messages_sent")
-    message_reciever = relationship("UserSchema", foreign_keys=[reciever_id], back_populates="messages_recieved")
-    group_chat = relationship("GroupChatSchema", back_populates="group_chat_messages")
+    message_sender: UserSchema = relationship("UserSchema", foreign_keys=[sender_id], back_populates="messages_sent")
+    message_reciever: UserSchema = relationship("UserSchema", foreign_keys=[reciever_id], back_populates="messages_recieved")
+    group_chat: GroupChatSchema = relationship("GroupChatSchema", back_populates="group_chat_messages")
     
     PrimaryKeyConstraint(message_id)
