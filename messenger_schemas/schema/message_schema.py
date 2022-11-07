@@ -1,14 +1,15 @@
-from sqlalchemy import BOOLEAN, Column, DATETIME, ForeignKeyConstraint, Integer, VARCHAR, PrimaryKeyConstraint
-from ..schema import Base
-from sqlalchemy.orm import relationship
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
+from sqlalchemy import BOOLEAN, Column, DATETIME, ForeignKeyConstraint, Integer, VARCHAR, PrimaryKeyConstraint
+from ..schema import BaseRecord, Base
+from sqlalchemy.orm import relationship
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from .user_schema import UserSchema
     from .group_chat_schema import GroupChatSchema
 
-class MessageSchema(Base):
+class MessageSchema(Base, BaseRecord):
     __tablename__ = "message"
     message_id = Column(Integer, nullable=False, autoincrement="auto")
     sender_id = Column(Integer, nullable=True)
@@ -36,3 +37,6 @@ class MessageSchema(Base):
     group_chat: GroupChatSchema = relationship("GroupChatSchema", back_populates="group_chat_messages")
     
     PrimaryKeyConstraint(message_id)
+    
+    def key(self) -> Any:
+        return self.message_id

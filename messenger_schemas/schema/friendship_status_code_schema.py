@@ -1,7 +1,8 @@
+from typing import Any
 from sqlalchemy import CHAR, Column, VARCHAR, PrimaryKeyConstraint, UniqueConstraint
-from ..schema import Base
+from ..schema import BaseRecord, Base
 
-class FriendshipStatusCodeSchema(Base):
+class FriendshipStatusCodeSchema(Base, BaseRecord):
     __tablename__ = "friendship_status_code"
     status_code_id = Column(CHAR(1), nullable=False)
     name = Column(VARCHAR(20), nullable=False)
@@ -10,3 +11,6 @@ class FriendshipStatusCodeSchema(Base):
     UniqueConstraint(name)
     
     PrimaryKeyConstraint(status_code_id, name)
+    
+    def key(self) -> Any:
+        return (self.status_code_id, self.name)

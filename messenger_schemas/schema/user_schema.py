@@ -1,14 +1,13 @@
-from typing import List
-from sqlalchemy import Column, DATETIME, Integer, VARCHAR, CHAR, PrimaryKeyConstraint, UniqueConstraint
+from typing import Any, List
+from sqlalchemy import Column, DATETIME, Integer, VARCHAR, PrimaryKeyConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship
 from .group_chat_member_schema import GroupChatMemberSchema
 from .group_chat_schema import GroupChatSchema
 from .message_schema import MessageSchema
 from .friendship_schema import FriendshipSchema
+from ..schema import BaseRecord, Base
 
-from ..schema import Base
-
-class UserSchema(Base):
+class UserSchema(Base, BaseRecord):
     __tablename__ = "user"
     user_id = Column(Integer, nullable=False, autoincrement="auto")
     username = Column(VARCHAR(25), nullable=False)
@@ -54,6 +53,9 @@ class UserSchema(Base):
     
     UniqueConstraint(email)
     UniqueConstraint(username)
+    
+    def key(self) -> Any:
+        return self.user_id
     
     # TODO: add account status which can be banned or disabled.
     # TODO: maybe add account type (google, facebook, email and password etc.)

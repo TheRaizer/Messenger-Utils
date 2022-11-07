@@ -1,10 +1,11 @@
+from typing import Any
 from sqlalchemy import CHAR, DATETIME, Column, ForeignKeyConstraint, Integer, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
 from .friendship_status_code_schema import FriendshipStatusCodeSchema
-from ..schema import Base
+from ..schema import BaseRecord, Base
 
 
-class FriendshipStatusSchema(Base):
+class FriendshipStatusSchema(Base, BaseRecord):
     __tablename__ = "friendship_status"
     requester_id = Column(Integer, nullable=False)
     addressee_id = Column(Integer, nullable=False)
@@ -27,3 +28,6 @@ class FriendshipStatusSchema(Base):
                         name="friendship_status_specifier_id_FK")
     
     status_code: FriendshipStatusCodeSchema = relationship(FriendshipStatusCodeSchema.__name__)
+    
+    def key(self) -> Any:
+        return (self.requester_id, self.addressee_id, self.specified_date_time)
