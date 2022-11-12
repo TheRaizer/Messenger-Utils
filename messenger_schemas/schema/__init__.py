@@ -9,19 +9,21 @@ from ..environment_variables import RDS_URL
 
 Base: DeclarativeMeta = declarative_base()
 
-class BaseRecord():
+
+class BaseRecord:
     def key(self) -> Any:
         raise NotImplementedError
-    
+
     def __eq__(self, other: "BaseRecord"):
         return self.key() == other.key()
-        
+
 
 engine = create_engine(RDS_URL)
 
+
 def database_session():
     session: Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)()
-    
+
     try:
         yield session
         if session.dirty:
@@ -31,4 +33,3 @@ def database_session():
         raise
     finally:
         session.close()
-    
