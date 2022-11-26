@@ -4,10 +4,14 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
-
+import logging
 from ..environment_variables import RDS_URL
 
 Base: DeclarativeMeta = declarative_base()
+
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 class BaseRecord():
     def key(self) -> Any:
@@ -26,9 +30,9 @@ def database_session():
         yield session
         if session.dirty:
             session.commit()
-    except:
+    except Exception as e:
         session.rollback()
-        raise
+        logger.error('an error occured while using the database session due to %s', e)
     finally:
         session.close()
     
