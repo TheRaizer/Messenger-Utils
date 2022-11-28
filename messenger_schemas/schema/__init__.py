@@ -5,7 +5,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 import logging
-from ..environment_variables import RDS_URL
+from ..environment_variables import (
+    RDS_URL,
+    RDS_POOL_SIZE,
+    RDS_MAX_OVERFLOW,
+    RDS_CONNECTION_TIMEOUT,
+)
 
 Base: DeclarativeMeta = declarative_base()
 
@@ -22,7 +27,12 @@ class BaseRecord:
         return self.key() == other.key()
 
 
-engine = create_engine(RDS_URL)
+engine = create_engine(
+    RDS_URL,
+    pool_size=RDS_POOL_SIZE,
+    max_overflow=RDS_MAX_OVERFLOW,
+    connect_args={"connect_timeout": RDS_CONNECTION_TIMEOUT},
+)
 
 
 def database_session():
