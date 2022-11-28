@@ -27,26 +27,22 @@ class BaseRecord:
         return self.key() == other.key()
 
 
-engine = create_engine(
-    RDS_URL,
-    pool_size=RDS_POOL_SIZE,
-    max_overflow=RDS_MAX_OVERFLOW,
-    connect_args={"connect_timeout": RDS_CONNECTION_TIMEOUT},
-)
-
-
 def database_session():
+    engine = create_engine(
+        RDS_URL,
+        pool_size=RDS_POOL_SIZE,
+        max_overflow=RDS_MAX_OVERFLOW,
+        connect_args={"connect_timeout": RDS_CONNECTION_TIMEOUT},
+    )
+
     session: Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)()
 
-    print("use session")
     try:
         yield session
         if session.dirty:
-            print("session is dirty so commit")
             session.commit()
     except Exception as e:
         session.rollback()
         logger.error("an error occured while using the database session due to %s", e)
     finally:
-        print("close session")
         session.close()
