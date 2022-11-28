@@ -10,11 +10,15 @@ from ..environment_variables import (
     RDS_URL,
     RDS_POOL_SIZE,
     RDS_MAX_OVERFLOW,
-    RDS_CONNECTION_TIMEOUT,
 )
 
 Base: DeclarativeMeta = declarative_base()
-
+engine = create_engine(
+    RDS_URL,
+    pool_size=RDS_POOL_SIZE,
+    max_overflow=RDS_MAX_OVERFLOW,
+    pool_pre_ping=True,
+)
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -28,17 +32,7 @@ class BaseRecord:
         return self.key() == other.key()
 
 
-def make_engine():
-    engine = create_engine(
-        RDS_URL,
-        pool_size=RDS_POOL_SIZE,
-        max_overflow=RDS_MAX_OVERFLOW,
-        connect_args={"connect_timeout": RDS_CONNECTION_TIMEOUT},
-    )
-    return engine
-
-
-def database_session(engine):
+def database_session():
     session: Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)()
 
     try:
@@ -50,15 +44,3 @@ def database_session(engine):
         logger.error("an error occured while using the database session due to %s", e)
     finally:
         session.close()
-
-
-def get_db_session_context():
-    engine = make_engine()
-
-    def get_database_session():
-        return database_session(engine)
-
-    return contextmanager(get_database_session)
-
-
-DatabaseSession = get_db_session_context()
