@@ -15,9 +15,11 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/TheRaizer/Messenger-Utils",
-    project_urls={"Bug Tracker": "https://github.com/TheRaizer/Messenger-Utils/issues"},
+    project_urls={
+        "Bug Tracker": "https://github.com/TheRaizer/Messenger-Utils/issues"
+    },
     license="MIT",
-    packages=find_packages(include=["messenger_schemas"]),
+    packages=find_packages(include=["messenger_schemas, messenger_schemas.*"]),
     install_requires=required,
     python_requires=">=3.9",
 )
