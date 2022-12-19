@@ -19,7 +19,7 @@ setup(
         "Bug Tracker": "https://github.com/TheRaizer/Messenger-Utils/issues"
     },
     license="MIT",
-    packages=find_packages(include=["messenger_schemas, messenger_schemas.*"]),
+    packages=["messenger_schemas", "messenger_schemas.schema"],
     install_requires=required,
     python_requires=">=3.9",
 )
