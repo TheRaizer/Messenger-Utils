@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 from typing import Any
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
@@ -52,7 +53,9 @@ class BaseRecord:
 
 
 def database_session():
-    session: Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)()
+    session: Session = sessionmaker(
+        autocommit=False, autoflush=False, bind=engine
+    )()
 
     try:
         yield session
@@ -60,6 +63,11 @@ def database_session():
             session.commit()
     except Exception as e:
         session.rollback()
-        logger.error("an error occured while using the database session due to %s", e)
+        logger.error(
+            "an error occured while using the database session due to %s", e
+        )
     finally:
         session.close()
+
+
+DatabaseSessionContext = contextmanager(database_session)
