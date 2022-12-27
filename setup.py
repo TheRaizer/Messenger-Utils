@@ -8,7 +8,7 @@ with open("requirements.txt", "r", encoding="utf-8") as f:
 
 setup(
     name="messenger_schemas",
-    version="0.0.1",
+    version="0.0.2",
     author="Aidan Fu",
     author_email="aidan.fu000@gmail.com",
     description="Contains all the schemas for the messenger database",
