@@ -57,7 +57,9 @@ class MessageSchema(Base, BaseRecord):
         "UserSchema", foreign_keys=[sender_id], back_populates="messages_sent"
     )
     message_reciever: UserSchema = relationship(
-        "UserSchema", foreign_keys=[reciever_id], back_populates="messages_recieved"
+        "UserSchema",
+        foreign_keys=[reciever_id],
+        back_populates="messages_recieved",
     )
     group_chat: GroupChatSchema = relationship(
         "GroupChatSchema", back_populates="group_chat_messages"

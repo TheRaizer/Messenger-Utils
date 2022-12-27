@@ -17,10 +17,14 @@ class GroupChatSchema(Base, BaseRecord):
     name = Column(VARCHAR(20), nullable=False)
 
     group_chat_messages: List[MessageSchema] = relationship(
-        MessageSchema.__name__, back_populates="group_chat", passive_deletes=True
+        MessageSchema.__name__,
+        back_populates="group_chat",
+        passive_deletes=True,
     )
     members: List[UserSchema] = relationship(
-        "UserSchema", secondary=GroupChatMemberSchema, back_populates="group_chats"
+        "UserSchema",
+        secondary=GroupChatMemberSchema,
+        back_populates="group_chats",
     )
 
     PrimaryKeyConstraint(group_chat_id)
