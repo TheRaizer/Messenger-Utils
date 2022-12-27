@@ -12,6 +12,4 @@ RDS_DB_NAME = os.environ["RDS_DB_NAME"]
 RDS_POOL_SIZE = int(os.environ["RDS_POOL_SIZE"])
 RDS_MAX_OVERFLOW = int(os.environ["RDS_MAX_OVERFLOW"])
 
-RDS_URL = (
-    f"mysql+pymysql://{RDS_USER}:{RDS_PASSWORD}@{RDS_ENDPOINT}:{RDS_PORT}/{RDS_DB_NAME}"
-)
+RDS_URL = f"mysql+pymysql://{RDS_USER}:{RDS_PASSWORD}@{RDS_ENDPOINT}:{RDS_PORT}/{RDS_DB_NAME}"

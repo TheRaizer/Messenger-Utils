@@ -1,5 +1,11 @@
 from typing import Any
-from sqlalchemy import CHAR, Column, VARCHAR, PrimaryKeyConstraint, UniqueConstraint
+from sqlalchemy import (
+    CHAR,
+    Column,
+    VARCHAR,
+    PrimaryKeyConstraint,
+    UniqueConstraint,
+)
 from ..schema import BaseRecord, Base
 
 

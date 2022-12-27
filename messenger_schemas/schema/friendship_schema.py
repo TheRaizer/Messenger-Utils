@@ -41,7 +41,9 @@ class FriendshipSchema(Base, BaseRecord):
     )
 
     requester: UserSchema = relationship(
-        "UserSchema", foreign_keys=[requester_id], back_populates="friend_requests_sent"
+        "UserSchema",
+        foreign_keys=[requester_id],
+        back_populates="friend_requests_sent",
     )
     addressee: UserSchema = relationship(
         "UserSchema",
